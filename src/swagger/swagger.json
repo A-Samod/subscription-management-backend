@@ -1,0 +1,155 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Subscription Management API",
+      "version": "1.0.0",
+      "description": "API for managing Spotify and YouTube subscriptions"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "tags": [
+      {
+        "name": "subscriptions",
+        "description": "Subscription management"
+      }
+    ],
+    "schemes": ["http"],
+    "paths": {
+      "/subscriptions": {
+        "get": {
+          "tags": ["subscriptions"],
+          "summary": "Get all subscriptions",
+          "responses": {
+            "200": {
+              "description": "List of subscriptions",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Subscription"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["subscriptions"],
+          "summary": "Create a new subscription",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "subscription",
+              "description": "Subscription object",
+              "schema": {
+                "$ref": "#/definitions/Subscription"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Subscription created"
+            }
+          }
+        }
+      },
+      "/subscriptions/{id}": {
+        "get": {
+          "tags": ["subscriptions"],
+          "summary": "Get a subscription by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription object",
+              "schema": {
+                "$ref": "#/definitions/Subscription"
+              }
+            },
+            "404": {
+              "description": "Subscription not found"
+            }
+          }
+        },
+        "put": {
+          "tags": ["subscriptions"],
+          "summary": "Update a subscription by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "subscription",
+              "description": "Updated subscription object",
+              "schema": {
+                "$ref": "#/definitions/Subscription"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription updated"
+            },
+            "404": {
+              "description": "Subscription not found"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["subscriptions"],
+          "summary": "Delete a subscription by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription deleted"
+            },
+            "404": {
+              "description": "Subscription not found"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Subscription": {
+        "type": "object",
+        "required": ["userId", "platform", "startDate", "endDate"],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string",
+            "enum": ["spotify", "youtube"]
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+  
