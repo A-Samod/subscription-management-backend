@@ -11,6 +11,10 @@
       {
         "name": "subscriptions",
         "description": "Subscription management"
+      },
+      {
+        "name": "user",
+        "description": "User management"
       }
     ],
     "schemes": ["http"],
@@ -19,6 +23,11 @@
         "get": {
           "tags": ["subscriptions"],
           "summary": "Get all subscriptions",
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "List of subscriptions",
@@ -28,12 +37,20 @@
                   "$ref": "#/definitions/Subscription"
                 }
               }
+            },
+            "401": {
+              "description": "Unauthorized"
             }
           }
         },
         "post": {
           "tags": ["subscriptions"],
           "summary": "Create a new subscription",
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
           "parameters": [
             {
               "in": "body",
@@ -47,6 +64,9 @@
           "responses": {
             "201": {
               "description": "Subscription created"
+            },
+            "401": {
+              "description": "Unauthorized"
             }
           }
         }
@@ -55,6 +75,11 @@
         "get": {
           "tags": ["subscriptions"],
           "summary": "Get a subscription by ID",
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
           "parameters": [
             {
               "name": "id",
@@ -70,6 +95,9 @@
                 "$ref": "#/definitions/Subscription"
               }
             },
+            "401": {
+              "description": "Unauthorized"
+            },
             "404": {
               "description": "Subscription not found"
             }
@@ -78,6 +106,11 @@
         "put": {
           "tags": ["subscriptions"],
           "summary": "Update a subscription by ID",
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
           "parameters": [
             {
               "name": "id",
@@ -98,6 +131,9 @@
             "200": {
               "description": "Subscription updated"
             },
+            "401": {
+              "description": "Unauthorized"
+            },
             "404": {
               "description": "Subscription not found"
             }
@@ -106,6 +142,11 @@
         "delete": {
           "tags": ["subscriptions"],
           "summary": "Delete a subscription by ID",
+          "security": [
+            {
+              "Bearer": []
+            }
+          ],
           "parameters": [
             {
               "name": "id",
@@ -118,8 +159,78 @@
             "200": {
               "description": "Subscription deleted"
             },
+            "401": {
+              "description": "Unauthorized"
+            },
             "404": {
               "description": "Subscription not found"
+            }
+          }
+        }
+      },
+      "/user/register": {
+        "post": {
+          "tags": ["user"],
+          "summary": "Register a new user",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "User object",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User registered"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+      "/user/login": {
+        "post": {
+          "tags": ["user"],
+          "summary": "Log in a user",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "credentials",
+              "description": "User credentials",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User logged in",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid credentials"
+            },
+            "404": {
+              "description": "User not found"
             }
           }
         }
@@ -149,6 +260,25 @@
             "type": "boolean"
           }
         }
+      },
+      "User": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "auth-token",
+        "in": "header"
       }
     }
   }
