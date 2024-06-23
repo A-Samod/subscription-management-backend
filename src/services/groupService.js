@@ -1,4 +1,4 @@
-const groupRepository = require('../repositories/groupRepository');
+const groupRepository = require("../repositories/groupRepository");
 
 class GroupService {
   async createGroup(groupData) {

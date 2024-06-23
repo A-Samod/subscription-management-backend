@@ -1,4 +1,4 @@
-const Group = require('../models/groupModel');
+const Group = require("../models/groupModel");
 
 class GroupRepository {
   async createGroup(group) {
@@ -6,11 +6,11 @@ class GroupRepository {
   }
 
   async getAllGroups() {
-    return await Group.find().populate('ownerId members');
+    return await Group.find().populate("ownerId members");
   }
 
   async getGroupById(groupId) {
-    return await Group.findById(groupId).populate('ownerId members');
+    return await Group.findById(groupId).populate("ownerId members");
   }
 
   async updateGroup(groupId, groupData) {
