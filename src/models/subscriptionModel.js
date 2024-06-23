@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const subscriptionSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
   platform: { type: String, required: true, enum: ['spotify', 'youtube'] },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
