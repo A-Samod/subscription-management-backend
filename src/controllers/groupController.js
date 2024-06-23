@@ -1,4 +1,4 @@
-const groupService = require('../services/groupService');
+const groupService = require("../services/groupService");
 
 class GroupController {
   async createGroup(req, res) {
@@ -23,7 +23,7 @@ class GroupController {
     try {
       const group = await groupService.getGroupById(req.params.groupId);
       if (!group) {
-        return res.status(404).json({ message: 'Group not found' });
+        return res.status(404).json({ message: "Group not found" });
       }
       res.status(200).json(group);
     } catch (error) {
@@ -33,9 +33,12 @@ class GroupController {
 
   async updateGroup(req, res) {
     try {
-      const group = await groupService.updateGroup(req.params.groupId, req.body);
+      const group = await groupService.updateGroup(
+        req.params.groupId,
+        req.body
+      );
       if (!group) {
-        return res.status(404).json({ message: 'Group not found' });
+        return res.status(404).json({ message: "Group not found" });
       }
       res.status(200).json(group);
     } catch (error) {
@@ -47,9 +50,9 @@ class GroupController {
     try {
       const group = await groupService.deleteGroup(req.params.groupId);
       if (!group) {
-        return res.status(404).json({ message: 'Group not found' });
+        return res.status(404).json({ message: "Group not found" });
       }
-      res.status(200).json({ message: 'Group deleted successfully' });
+      res.status(200).json({ message: "Group deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
